@@ -1,20 +1,5 @@
-#include "constants.h"
-
-extern unsigned int loopCount;
-extern Adafruit_NeoPixel pixels;
-
-// just a simple color fade
-void fadeAllColors(){
-    // limit to 510 different colors
-    if (loopCount > 765) loopCount = 0;
-    loopCount++;
-
-    for (int i = 0; i < NUMPIXELS; i++)
-    {
-
-        pixels.setColor(i,getRed(loopCount),getGreen(loopCount),getBlue(loopCount));
-    }
-}
+#include "../constants.h"
+#include "../externs.h"
 
 // get rgb color from int in range 0-765
 // sum is always 255 and only two colors are active
@@ -32,4 +17,15 @@ int getBlue(int n){
     if (n <= 255) return 255-n;
     if (n >510 && n<=765) return n-510;
     return 0;
+}
+
+// just a simple color fade
+void fadeAllColors(){
+    // limit to 765 different colors
+    if (loopCount > 765) loopCount = 0;
+
+    for (int i = 0; i < NUMPIXELS; i++)
+    {
+        pixels.Color(getRed(loopCount),getGreen(loopCount),getBlue(loopCount));
+    }
 }

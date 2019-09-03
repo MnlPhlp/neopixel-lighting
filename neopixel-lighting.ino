@@ -3,16 +3,15 @@
 // Adafruit NeoPixel library
 
 #include <Adafruit_NeoPixel.h>
-#include "modes/*"
+#include "modes/fade.cpp"
+#include "modes/filling.cpp"
+#include "constants.h"
 #ifdef __AVR__
  #include <avr/power.h> // Required for 16 MHz Adafruit Trinket
 #endif
 
 // Which pin on the Arduino is connected to the NeoPixels?
 #define PIN        6 // On Trinket or Gemma, suggest changing this to 1
-
-// How many NeoPixels are attached to the Arduino?
-#define NUMPIXELS 600 // Popular NeoPixel ring size
 
 // When setting up the NeoPixel library, we tell it how many pixels,
 // and which pin to use to send signals. Note that for older NeoPixel
@@ -26,7 +25,10 @@ Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 int space = 2;
 int pause = 0;
 int counting = -1;
-unsigned int loopCount = 0
+unsigned int loopCount = 0;
+int mode;
+#define Mode_filling 0
+#define Mode_fade 1
   
 void setup() {
   // These lines are specifically to support the Adafruit Trinket 5V 16 MHz.
@@ -38,4 +40,15 @@ void setup() {
 
   pixels.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
   Serial.begin(9600);
+}
+
+void loop(){
+  loopCount++;
+  int mode = Mode_fade;
+  switch (mode)
+  {
+  case Mode_filling: filling();       break;
+  case Mode_fade:    fadeAllColors(); break;
+  default: break;
+  }
 }
