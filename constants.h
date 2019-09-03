@@ -1,0 +1,1 @@
+#define NUMPIXELS 600
