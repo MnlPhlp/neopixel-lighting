@@ -8,6 +8,8 @@
 #define C_Green 65280
 #define C_Red 16711680
 #define C_White 16777215
+#define C_WhiteLow 8421504
+
 
 // Buttons
 struct buttonInfo

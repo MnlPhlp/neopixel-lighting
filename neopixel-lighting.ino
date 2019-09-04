@@ -58,10 +58,10 @@ void loop(){
     }
   }
   else{
-    if (pixels.getBrightness() != 0) pixels.clear();
+    if (pixels.getBrightness() != 0){
+      pixels.clear();
+      pixels.show();
+    } 
   }
-  
-  Serial.println("Mode: "+String(mode));
-  Serial.println("Color: "+String(G_color));
-  Serial.println("Power: "+String(power));
+  delay(20);
 }

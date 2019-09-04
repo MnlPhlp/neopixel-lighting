@@ -4,7 +4,6 @@ namespace modes
 {
   void oldFilling() {
     static int space = 0;
-    Serial.println("space: "+String(space));  
     
     int count = 0;
     int movingDots = 0;

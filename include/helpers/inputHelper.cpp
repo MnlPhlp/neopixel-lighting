@@ -15,14 +15,17 @@ namespace control
     void cycleColor() {
         switch (G_color)
         {
-        case C_Red:
-            G_color = C_Green;
+        case C_WhiteLow:
+            G_color = C_Red;
             break;
         case C_Green:
             G_color = C_Blue;
             break;
         case C_Blue:
-            G_color = C_Red;
+            G_color = C_WhiteLow;
+            break;
+        case C_Red:
+            G_color = C_Green;
             break;
         default:
             break;
