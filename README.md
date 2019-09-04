@@ -35,6 +35,7 @@ current Modes are:
  - single color
  - fade
  - filling
+ - breath
  
  **always open for new mode ideas as [Issue](https://github.com/MnlPhlp/neopixel-lighting/issues) or modes as [PR](https://github.com/MnlPhlp/neopixel-lighting/pulls)**
  
