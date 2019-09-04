@@ -1,6 +1,7 @@
 # neopixel-lighting
 A Project for controlling neopixel led-strips with an arduino. It includes some lighting modes and inputhandling.
-If You want to build this project yourself please use the affiliate links in the Hardware-Section.
+
+If You want to build this project yourself please support it by using the affiliate links in the Hardware-Section.
 
 ## Hardware
 I used an <a target="_blank" href="https://www.amazon.de/gp/product/B01MA5BLQI/ref=as_li_tl?ie=UTF8&camp=1638&creative=6742&creativeASIN=B01MA5BLQI&linkCode=as2&tag=1606003112902-21&linkId=92289d6004bcd07606fce47f3d0eaa1e">Arduino Mega</a><img src="//ir-de.amazon-adsystem.com/e/ir?t=1606003112902-21&l=am2&o=3&a=B01MA5BLQI" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"/> and two 5m LED strips with 300 LEDs each.
