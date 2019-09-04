@@ -23,15 +23,21 @@ enum button_enum {B_CYCLE_UP,B_POWER,B_COLOR,B_BUTTON_COUNT};
 buttonInfo buttons[B_BUTTON_COUNT];
 
 // Modes
-enum lighting_mode {M_Filling,M_Fade,M_Breath,M_Color,M_Mode_Count};
+enum lighting_mode {M_Filling,M_Fade,M_Breath,M_Color,M_Off,M_Mode_Count};
 
 // settings
-int pause = 0;
+#define Max_Step 10
+#define Max_Pause 10
 
 // global variables
 // start with simple blue
 uint32_t G_color = C_Blue;
 unsigned int loopCount = 0;
+bool G_power = true;
+extern Adafruit_NeoPixel pixels;
+byte pause = 0;
+byte step = 1;
+byte G_brightness = 255;
 
 #endif
 #define constants_include

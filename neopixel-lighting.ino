@@ -19,8 +19,8 @@
 // strips you might need to change the third parameter -- see the
 // strandtest example for more information on possible values.
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
-boolean power = true;
 lighting_mode mode = M_Color;
+unsigned long oldMillis = millis();
 
 void setup() {
   // These lines are specifically to support the Adafruit Trinket 5V 16 MHz.
@@ -43,25 +43,20 @@ void setup() {
 }
 
 void loop(){
-  loopCount++;
-  // read input
-  input::handleButtonInput();
+ // read input
+ bool newInput=input::handleButtonInput();
 
-  if (power){
-    // handle actual lighting
+  // handle actual lighting
+  if (newInput || ((millis()-oldMillis) > (pause*10))){
     switch (mode){
       case M_Filling: modes::filling(); break;
       case M_Fade:    modes::fade(); break;
-      case M_Breath:  modes::breath(); bereak;
+      case M_Breath:  modes::breath(); break;
       case M_Color:   myPixels::setAllPixels(G_color); break;
+      case M_Off:     myPixels::turnOff(); break;
       default: break;
     }
+    oldMillis = millis();
+    loopCount += step;
   }
-  else{
-    if (pixels.getBrightness() != 0){
-      pixels.clear();
-      pixels.show();
-    } 
-  }
-  delay(20);
 }
