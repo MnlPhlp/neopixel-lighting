@@ -17,7 +17,7 @@ struct buttonInfo
     void (*action)();
 };
 
-enum button_enum {B_CYCLE_UP,B_BUTTON_COUNT};
+enum button_enum {B_CYCLE_UP,B_POWER,B_COLOR,B_BUTTON_COUNT};
 buttonInfo buttons[B_BUTTON_COUNT];
 
 // Modes
@@ -28,7 +28,6 @@ int pause = 0;
 
 // global variables
 // start with simple blue
-lighting_mode G_mode = M_Color;
 uint32_t G_color = C_Blue;
 unsigned int loopCount = 0;
 

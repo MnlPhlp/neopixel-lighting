@@ -19,6 +19,8 @@
 // strips you might need to change the third parameter -- see the
 // strandtest example for more information on possible values.
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+boolean power = true;
+lighting_mode mode = M_Color;
 
 void setup() {
   // These lines are specifically to support the Adafruit Trinket 5V 16 MHz.
@@ -32,11 +34,12 @@ void setup() {
   Serial.begin(9600);
 
   // setup Buttons
+  input::setupButtons();
+  // setup Button Pins
   for (int i = 0; i < B_BUTTON_COUNT; i++)
   {
     pinMode(buttons[i].pin,INPUT_PULLUP);
   }
-  input::setupButtons();
 }
 
 void loop(){
@@ -44,15 +47,21 @@ void loop(){
   // read input
   input::handleButtonInput();
 
-  if ()
-  // handle actual lighting
-  switch (G_mode){
-    case M_Filling: modes::filling(); break;
-    case M_Fade:    modes::fadeMyColors(); break;
-    case M_FadeAll: modes::fadeAllColors(); break;
-    case M_Color:   myPixels::setAllPixels(G_color); break;
-    default: break;
+  if (power){
+    // handle actual lighting
+    switch (mode){
+      case M_Filling: modes::filling(); break;
+      case M_Fade:    modes::fadeMyColors(); break;
+      case M_FadeAll: modes::fadeAllColors(); break;
+      case M_Color:   myPixels::setAllPixels(G_color); break;
+      default: break;
+    }
+  }
+  else{
+    if (pixels.getBrightness() != 0) pixels.clear();
   }
   
-
+  Serial.println("Mode: "+String(mode));
+  Serial.println("Color: "+String(G_color));
+  Serial.println("Power: "+String(power));
 }
