@@ -1,2 +1,2 @@
-#include "modes/fade.cpp"
+#include "modes/simpleModes.cpp"
 #include "modes/filling.cpp"
