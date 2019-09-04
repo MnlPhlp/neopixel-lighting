@@ -1,4 +1,5 @@
 #include "../all.h"
+
 namespace modeIntern{
 // get rgb color from int in range 0-765
 // sum is always 255 and only two colors are active
@@ -21,29 +22,25 @@ namespace modes
 {
     using namespace modeIntern;
 
-        // just a simple color fade
-    void fadeMyColors(){
+    // just a simple color fade
+    void fade(){
         // limit to 765 different colors
         if (loopCount > 765) loopCount = 0;
         myPixels::setAllPixels(getRed(loopCount),getGreen(loopCount), getBlue(loopCount));
     }
 
-    void fadeAllColors(){
-        static bool invert;
-        // limit to maximum value for just RGB Colors
-        if (loopCount > C_White){
-            loopCount = 0;
-            invert = !invert;
-        } 
-
-        if (invert){
-            myPixels::setAllPixels(loopCount);
-        } 
-        else {
-            myPixels::setAllPixels(C_White - loopCount);    
-        }
-        
-        
+    void breath(){
+        // store if dimming or getting brighter
+        static bool dim = false;
+        // limit brightness values
+        if (loopCount > 255) loopCount = 50;
+        if (loopCount < 50) loopCount = 50;
+        int r = (uint8_t)(G_color >> 16);
+        int g = (uint8_t)(G_color >> 8);
+        int b = (uint8_t)G_color;
+        float fac = loopCount / 255 
+        myPixels::setAllPixels(r*fac,g*fac,b*fac);
     }
+
 } // namespace modes
 

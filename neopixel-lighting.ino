@@ -51,16 +51,16 @@ void loop(){
     // handle actual lighting
     switch (mode){
       case M_Filling: modes::filling(); break;
-      case M_Fade:    modes::fadeMyColors(); break;
-      case M_FadeAll: modes::fadeAllColors(); break;
+      case M_Fade:    modes::fade(); break;
+      case M_Breath:  modes::breath(); bereak;
       case M_Color:   myPixels::setAllPixels(G_color); break;
       default: break;
     }
   }
   else{
     if (pixels.getBrightness() != 0) pixels.clear();
+    pixels.show();
   }
-  
   Serial.println("Mode: "+String(mode));
   Serial.println("Color: "+String(G_color));
   Serial.println("Power: "+String(power));
