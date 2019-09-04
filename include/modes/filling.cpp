@@ -12,10 +12,10 @@ namespace modes
     for (int i = 0; i < loopCount; i++)
     {
       if (i%space == offset){
-        pixels.setPixelColor(i,G_color);
-        pixels.setPixelColor(i-1,0);
-        pixels.setPixelColor(NUMPIXELS-i,G_color);
-        pixels.setPixelColor(NUMPIXELS-i+1,0);
+        myPixels::setPixelColor(i,G_color);
+        myPixels::setPixelColor(i-1,0);
+        myPixels::setPixelColor(NUMPIXELS-i,G_color);
+        myPixels::setPixelColor(NUMPIXELS-i+1,0);
       }
     }
  
