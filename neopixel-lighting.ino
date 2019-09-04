@@ -3,9 +3,10 @@
 // Adafruit NeoPixel library
 
 #include <Adafruit_NeoPixel.h>
-#include "modes/fade.cpp"
-#include "modes/filling.cpp"
-#include "constants.h"
+
+#include "include/modes.h"
+#include "include/constants.h"
+#include "include/helpers.h"
 #ifdef __AVR__
  #include <avr/power.h> // Required for 16 MHz Adafruit Trinket
 #endif
@@ -19,17 +20,6 @@
 // strandtest example for more information on possible values.
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
-#define DELAYVAL 1 // Time (in milliseconds) to pause between pixels
-
-
-int space = 2;
-int pause = 0;
-int counting = -1;
-unsigned int loopCount = 0;
-int mode;
-#define Mode_filling 0
-#define Mode_fade 1
-  
 void setup() {
   // These lines are specifically to support the Adafruit Trinket 5V 16 MHz.
   // Any other board, you can remove this part (but no harm leaving it):
@@ -40,15 +30,29 @@ void setup() {
 
   pixels.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
   Serial.begin(9600);
+
+  // setup Buttons
+  for (int i = 0; i < B_BUTTON_COUNT; i++)
+  {
+    pinMode(buttons[i].pin,INPUT_PULLUP);
+  }
+  input::setupButtons();
 }
 
 void loop(){
   loopCount++;
-  int mode = Mode_fade;
-  switch (mode)
-  {
-  case Mode_filling: filling();       break;
-  case Mode_fade:    fadeAllColors(); break;
-  default: break;
+  // read input
+  input::handleButtonInput();
+
+  if ()
+  // handle actual lighting
+  switch (G_mode){
+    case M_Filling: modes::filling(); break;
+    case M_Fade:    modes::fadeMyColors(); break;
+    case M_FadeAll: modes::fadeAllColors(); break;
+    case M_Color:   myPixels::setAllPixels(G_color); break;
+    default: break;
   }
+  
+
 }
