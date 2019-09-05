@@ -47,7 +47,7 @@ void loop(){
  bool newInput=input::handleButtonInput();
 
   // handle actual lighting
-  if (newInput || ((millis()-oldMillis) > (pause*10))){
+  if (newInput || ((millis()-oldMillis) > (pause*10) && mode != M_Off && mode != M_Color)){
     switch (mode){
       case M_Filling: modes::filling(); break;
       case M_Fade:    modes::fade(); break;

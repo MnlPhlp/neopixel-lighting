@@ -33,9 +33,7 @@ namespace myPixels
     }
 
     void turnOff(){
-        if (G_power){
-            pixels.clear();
-            pixels.show();
-        }
+        pixels.clear();
+        pixels.show();
     }
 } // namespace pixels

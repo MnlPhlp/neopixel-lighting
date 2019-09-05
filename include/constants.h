@@ -34,7 +34,6 @@ enum lighting_mode {M_Filling,M_Fade,M_Breath,M_Color,M_Off,M_Mode_Count};
 // start with simple blue
 uint32_t G_color = C_Blue;
 unsigned int loopCount = 0;
-bool G_power = true;
 extern Adafruit_NeoPixel pixels;
 byte pause = 0;
 byte step = 1;
