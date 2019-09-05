@@ -35,12 +35,12 @@ namespace modes
         static bool dim = false;
         // limit brightness values
         if (loopCount >= 255) {
-            loopCount = 50;
+            loopCount = Min_Brightness;
             dim = !dim;
         }
-        if (loopCount < 50) loopCount = 50;
+        if (loopCount < Min_Brightness) loopCount = Min_Brightness;
         byte oldBrightness = G_brightness;
-        G_brightness = (dim ? 305 - loopCount : loopCount);
+        G_brightness = (dim ? (255+Min_Brightness) - loopCount : loopCount);
         myPixels::setAllPixels(G_color);
         G_brightness = oldBrightness;
         // reset brightness in case the mode changes
