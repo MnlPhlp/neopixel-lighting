@@ -8,7 +8,7 @@ namespace control
         mode = (lighting_mode)(mode+1)% M_Mode_Count; 
     }
 
-    void cycleSpeed() {
+    void cycleSpeedUp() {
         if (step = 1){
             if (pause >= Max_Pause){
                 pause = 0;
@@ -23,7 +23,7 @@ namespace control
         
     }
 
-    void cycleColor() {
+    void cycleColorUp() {
         switch (G_color)
         {
         case C_WhiteLow:
@@ -42,6 +42,17 @@ namespace control
             break;
         }
     }
+
+    void cycleBrightnessUp(){
+        if (G_brightness > 245)
+        {
+            G_brightness = Min_Brightness;
+        }
+        else
+        {
+            G_brightness += 10;    
+        }
+    }
 } // namespace control
 
 namespace input
@@ -50,10 +61,12 @@ namespace input
     void setupButtons(){
         buttons[B_CYCLE_UP].action = control::cycleModeUp;
         buttons[B_CYCLE_UP].pin = 51;
-        buttons[B_COLOR].action = control::cycleColor;
+        buttons[B_COLOR].action = control::cycleColorUp;
         buttons[B_COLOR].pin = 49;
-        buttons[B_POWER].action = control::cycleSpeed;
-        buttons[B_POWER].pin = 53;
+        buttons[B_Speed].action = control::cycleSpeedUp;
+        buttons[B_Speed].pin = 53;
+        buttons[B_Brightness].pin = 47;
+        buttons[B_Brightness].action = control::cycleBrightnessUp;
     }
     
     boolean handleButtonInput(){
