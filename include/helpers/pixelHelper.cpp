@@ -7,17 +7,16 @@ extern IRrecv recv;
 namespace myPixels
 {
     void show(){
-        // the IR-reciver has to be paused while sendig commands to the led-strip
-        decode_results res;
-        if (recv.decode(&res))
-            neoPixels.show();
-        else
-        {
-            neoPixels.show();
-            recv.resume();
+        bool shown = false;
+        while (!shown){
+            if (recv.isIdle()){
+                // wait for the ir reciver to not destroy current input
+                neoPixels.show();
+                shown = true;
+            }
         }
-        
     }
+    
     void setPixelColor(int i, uint8_t r, uint8_t g, uint8_t b){
         r *= (double)G_brightness/255;
         g *= (double)G_brightness/255;
