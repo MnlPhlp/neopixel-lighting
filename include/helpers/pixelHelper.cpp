@@ -49,7 +49,7 @@ namespace myPixels
     }
 
     void turnOff(){
-        pixels.clear();
-        pixels.show();
+        neoPixels.clear();
+        show();
     }
 } // namespace pixels
