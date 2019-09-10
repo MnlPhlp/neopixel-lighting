@@ -4,7 +4,6 @@
 
 #include <Adafruit_NeoPixel.h>
 #include <IRremote.h>
-
 #include "include/modes.h"
 #include "include/constants.h"
 #include "include/helpers.h"
@@ -31,7 +30,7 @@ void setup() {
 #endif
   // END of Trinket-specific code.
   neoPixels.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
-  #ifdef NL_DEBUG
+  #if NL_DEBUG
     Serial.begin(9600);
   #endif
 
@@ -57,9 +56,9 @@ void loop(){
     oldMillis = millis();
     loopCount += step;
     newInput = false;
-    #ifdef NL_DEBUG
+    #if NL_DEBUG
       Serial.println("Mode: "+modeName[mode]);
-      Serial.println("Color: "+String((uint8_t)(G_color >> 16))+String((uint8_t)(G_color >> 8))+String((uint8_t)G_color));
+      Serial.println("Color: "+String((uint8_t)(G_color >> 16))+", "+String((uint8_t)(G_color >> 8))+", "+String((uint8_t)G_color));
       Serial.println("Brightness: "+String(G_brightness));
       Serial.println("Steps: "+String(step));
       Serial.println("Pause: "+String(pause));

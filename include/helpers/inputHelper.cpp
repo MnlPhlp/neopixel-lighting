@@ -1,5 +1,7 @@
 #include "../constants.h"
-#include <IRremote.h>
+#if IR_Remote
+    #include <IRremote.h>
+#endif
 
 extern lighting_mode mode;
 extern IRrecv recv;
@@ -169,7 +171,7 @@ namespace input
         }
         return newInput;
     }
-
+#if IR_Remote
     void setupRemote(){
         remote[R_On].code = 0xF7C03F;
         remote[R_On].action = control::turnOn;
@@ -186,7 +188,7 @@ namespace input
         remote[R_Blue].code = 0xF7609F;
         remote[R_Blue].action = []{control::setColor(C_Blue);};
         remote[R_White].code = 0xF7E01F;
-        remote[R_White].action = []{control::setColor(C_White);};
+        remote[R_White].action = []{control::setColor(C_WhiteLow);};
         remote[R_Up].code = 0xF700FF;
         remote[R_Up].action = control::contextUp;
         remote[R_Down].code = 0xF7807F;
@@ -209,5 +211,5 @@ namespace input
         }
         return newInput;
     }
-
+#endif //IR_Remote
 } // namespace input
