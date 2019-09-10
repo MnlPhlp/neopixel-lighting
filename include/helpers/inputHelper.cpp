@@ -46,6 +46,17 @@ namespace control
         }
     }
 
+    void cycleBrightnessUp(){
+        if (G_brightness > 245)
+        {
+            G_brightness = Min_Brightness;
+        }
+        else
+        {
+            G_brightness += 10;    
+        }
+    }   
+
     void setColor(uint32_t color){
         G_color = color;
     }
