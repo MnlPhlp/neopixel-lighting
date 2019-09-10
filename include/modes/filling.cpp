@@ -19,7 +19,7 @@ namespace modes
       }
     }
  
-    pixels.show();
+    myPixels::show();
 
     offset ++;
     if (offset == space) offset=0;

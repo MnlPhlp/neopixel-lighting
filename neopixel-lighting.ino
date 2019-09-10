@@ -3,7 +3,7 @@
 // Adafruit NeoPixel library
 
 #include <Adafruit_NeoPixel.h>
-
+#include <IRremote.h>
 #include "include/modes.h"
 #include "include/constants.h"
 #include "include/helpers.h"
@@ -12,13 +12,13 @@
 #endif
 
 // Which pin on the Arduino is connected to the NeoPixels?
-#define PIN        6 // On Trinket or Gemma, suggest changing this to 1
-
+#define LED_PIN        6 // On Trinket or Gemma, suggest changing this to 1
 // When setting up the NeoPixel library, we tell it how many pixels,
 // and which pin to use to send signals. Note that for older NeoPixel
 // strips you might need to change the third parameter -- see the
 // strandtest example for more information on possible values.
-Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel neoPixels(NUMPIXELS, LED_PIN, NEO_GRB + NEO_KHZ800);
+IRrecv recv(RECV_PIN);
 lighting_mode mode = M_Color;
 unsigned long oldMillis = millis();
 
@@ -29,23 +29,20 @@ void setup() {
   clock_prescale_set(clock_div_1);
 #endif
   // END of Trinket-specific code.
+  neoPixels.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
+  #if NL_DEBUG
+    Serial.begin(9600);
+  #endif
 
-  pixels.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
-  Serial.begin(9600);
-
-  // setup Buttons
+  // setup Inputs
   input::setupButtons();
-  // setup Button Pins
-  for (int i = 0; i < B_BUTTON_COUNT; i++)
-  {
-    pinMode(buttons[i].pin,INPUT_PULLUP);
-  }
+  input::setupRemote();
 }
 
 void loop(){
  // read input
- bool newInput=input::handleButtonInput();
-
+  bool newInput=input::handleButtonInput();
+  newInput = newInput || input::handleRemoteInput();
   // handle actual lighting
   if (newInput || ((millis()-oldMillis) > (pause*10) && mode != M_Off && mode != M_Color)){
     switch (mode){
@@ -58,5 +55,13 @@ void loop(){
     }
     oldMillis = millis();
     loopCount += step;
+    newInput = false;
+    #if NL_DEBUG
+      Serial.println("Mode: "+modeName[mode]);
+      Serial.println("Color: "+String((uint8_t)(G_color >> 16))+", "+String((uint8_t)(G_color >> 8))+", "+String((uint8_t)G_color));
+      Serial.println("Brightness: "+String(G_brightness));
+      Serial.println("Steps: "+String(step));
+      Serial.println("Pause: "+String(pause));
+    #endif
   }
 }
