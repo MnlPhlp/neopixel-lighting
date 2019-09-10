@@ -22,19 +22,31 @@ struct buttonInfo
 enum button_enum {B_CYCLE_UP,B_Speed,B_COLOR,B_Brightness,B_BUTTON_COUNT};
 buttonInfo buttons[B_BUTTON_COUNT];
 
+// remote
+#define RECV_PIN 7
+
+struct remoteInfo
+{
+    uint32_t code;
+    void (*action)();
+};
+
+enum remote_enum {R_On,R_Off,R_Fade,R_Breath,R_Red,R_Green,R_Blue,R_White,R_Up,R_Down,R_Remote_Count};
+remoteInfo remote[R_Remote_Count];
+
 // Modes
 enum lighting_mode {M_Filling,M_Fade,M_Breath,M_Color,M_Off,M_Mode_Count};
 
 // settings
 #define Max_Step 10
-#define Max_Pause 10
+#define Max_Pause 100
 #define Min_Brightness 50 //255 means full brightness
 
 // global variables
 // start with simple blue
 uint32_t G_color = C_Blue;
 unsigned int loopCount = 0;
-extern Adafruit_NeoPixel pixels;
+bool G_power = true;
 byte pause = 0;
 byte step = 1;
 byte G_brightness = 255;

@@ -1,12 +1,28 @@
 #include "../constants.h"
+#include <IRremote.h>
+
+extern Adafruit_NeoPixel neoPixels;
+extern IRrecv recv;
 
 namespace myPixels
 {
+    void show(){
+        // the IR-reciver has to be paused while sendig commands to the led-strip
+        decode_results res;
+        if (recv.decode(&res))
+            neoPixels.show();
+        else
+        {
+            neoPixels.show();
+            recv.resume();
+        }
+        
+    }
     void setPixelColor(int i, uint8_t r, uint8_t g, uint8_t b){
         r *= (double)G_brightness/255;
         g *= (double)G_brightness/255;
         b *= (double)G_brightness/255;
-        pixels.setPixelColor(i,r,g,b);
+        neoPixels.setPixelColor(i,r,g,b);
     }
 
     void setPixelColor(int i, uint32_t c){
@@ -21,7 +37,7 @@ namespace myPixels
         {
             setPixelColor(i,r,g,b);
         }
-        pixels.show();
+        show();
         
     }
 
