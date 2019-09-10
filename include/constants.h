@@ -1,7 +1,7 @@
 #ifndef constants_include
 
+#define NL_DEBUG
 #define NUMPIXELS 600
-
 // Colors
 // imagine as 3 byte number with the bytes standing for Red, Green and Blue
 #define C_Blue 255
@@ -9,7 +9,6 @@
 #define C_Red 16711680
 #define C_White 16777215
 #define C_WhiteLow 8421504
-
 
 // Buttons
 struct buttonInfo
@@ -36,6 +35,9 @@ remoteInfo remote[R_Remote_Count];
 
 // Modes
 enum lighting_mode {M_Filling,M_Fade,M_Breath,M_Color,M_Off,M_Mode_Count};
+#ifdef NL_DEBUG
+    String modeName[] = {"Filling","Fade","Breath","Color","Off"};
+#endif
 
 // settings
 #define Max_Step 10
