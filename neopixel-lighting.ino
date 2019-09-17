@@ -40,9 +40,12 @@ void setup() {
 }
 
 void loop(){
+  lighting_mode oldMode = mode;
  // read input
   bool newInput=input::handleButtonInput();
   newInput = newInput || input::handleRemoteInput();
+  // reset loopCount if mode changed
+  if (oldMillis != mode) loopCount = 0;
   // handle actual lighting
   if (newInput || ((millis()-oldMillis) > (pause*10) && mode != M_Off && mode != M_Color)){
     switch (mode){
