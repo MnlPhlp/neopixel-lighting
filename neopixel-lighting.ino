@@ -56,12 +56,18 @@ void loop(){
     oldMillis = millis();
     loopCount += step;
     newInput = false;
-    #if NL_DEBUG
+    // Debug Output
+   #if NL_DEBUG
       Serial.println("Mode: "+modeName[mode]);
       Serial.println("Color: "+String((uint8_t)(G_color >> 16))+", "+String((uint8_t)(G_color >> 8))+", "+String((uint8_t)G_color));
       Serial.println("Brightness: "+String(G_brightness));
       Serial.println("Steps: "+String(step));
       Serial.println("Pause: "+String(pause));
+      for (int i = 0; i < NUMPIXELS; i++)
+      {
+        Serial.print(neoPixels.getPixelColor(i) == 0 ? "[ ]" : "[X]");
+      }
+      Serial.println();
     #endif
   }
 }
