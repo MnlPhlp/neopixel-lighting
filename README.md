@@ -30,6 +30,7 @@ If not using it set IR_REMOTE to 0 in 'include/constants.h'
  - [Powersupply](https://amzn.to/2LkXDXu) (calculate about 1A per 15 LEDs depending on LED-Strip)
 
 ### Pins
+
 | Pin (Arduino Mega) | Connected Component |
 | :------------------: | :------------------- |
 | 49 | power-button |
