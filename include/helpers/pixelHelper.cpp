@@ -9,8 +9,8 @@ namespace myPixels
     void show(){
         bool shown = false;
         while (!shown){
+            // wait for the ir reciver to not destroy current input
             if (recv.isIdle()){
-                // wait for the ir reciver to not destroy current input
                 neoPixels.show();
                 shown = true;
             }
