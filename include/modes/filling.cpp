@@ -3,7 +3,7 @@
 namespace modes
 {
   void filling(){
-    const space = 5; //space between the points
+    const int space = 5; //space between the points
     int maxI;
     static int stoppedPixels; //count of stoped pixels
     static int offset = 0;
@@ -15,7 +15,7 @@ namespace modes
     else{
       maxI = loopCount;
     }
-    
+
     // moving a row of pixels with space
     for (int i = 0; i < maxI; i++)
     {
