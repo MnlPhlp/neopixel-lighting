@@ -31,7 +31,7 @@ If not using it set IR_REMOTE to 0 in 'include/constants.h'
 
 ### Pins
 | Pin (Arduino Mega) | Connected Component |
-| :------------------: | ------------------- |
+| :------------------: | :------------------- |
 | 49 | power-button |
 | 51 | mode-button |
 | 53 | color-button |
