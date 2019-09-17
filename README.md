@@ -1,4 +1,4 @@
-# neopixel-lighting
+# Neopixel lighting
 A Project for controlling neopixel led-strips with an arduino. It includes some lighting modes and inputhandling.
 
 If You want to build this project yourself please support it by using the affiliate links in the Item-List.
