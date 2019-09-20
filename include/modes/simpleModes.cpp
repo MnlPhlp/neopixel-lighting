@@ -38,12 +38,14 @@ namespace modes
             loopCount = Min_Brightness;
             dim = !dim;
         }
-        if (loopCount < Min_Brightness) loopCount = Min_Brightness;
+        if (loopCount < Min_Brightness){
+            loopCount = Min_Brightness;
+        } 
         byte oldBrightness = G_brightness;
         G_brightness = (dim ? (255+Min_Brightness) - loopCount : loopCount);
         myPixels::setAllPixels(G_color);
-        G_brightness = oldBrightness;
         // reset brightness in case the mode changes
+        G_brightness = oldBrightness;
     }
 
 } // namespace modes

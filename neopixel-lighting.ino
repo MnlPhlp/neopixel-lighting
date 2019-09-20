@@ -31,7 +31,7 @@ void setup() {
   // END of Trinket-specific code.
   neoPixels.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
   #if NL_DEBUG
-    Serial.begin(9600);
+    Serial.begin(115200);
   #endif
 
   // setup Inputs
@@ -40,9 +40,12 @@ void setup() {
 }
 
 void loop(){
+  lighting_mode oldMode = mode;
  // read input
   bool newInput=input::handleButtonInput();
   newInput = newInput || input::handleRemoteInput();
+  // reset loopCount if mode changed
+  if (oldMode != mode) loopCount = 0;
   // handle actual lighting
   if (newInput || ((millis()-oldMillis) > (pause*10) && mode != M_Off && mode != M_Color)){
     switch (mode){
@@ -56,12 +59,19 @@ void loop(){
     oldMillis = millis();
     loopCount += step;
     newInput = false;
-    #if NL_DEBUG
+    // Debug Output
+   #if NL_DEBUG
       Serial.println("Mode: "+modeName[mode]);
       Serial.println("Color: "+String((uint8_t)(G_color >> 16))+", "+String((uint8_t)(G_color >> 8))+", "+String((uint8_t)G_color));
       Serial.println("Brightness: "+String(G_brightness));
       Serial.println("Steps: "+String(step));
       Serial.println("Pause: "+String(pause));
+      for (int i = 0; i < NUMPIXELS; i++)
+      {
+        Serial.print(neoPixels.getPixelColor(i) == 0 ? "[ ]" : "[X]");
+      }
+      Serial.println();
+      delay(200);
     #endif
   }
 }
