@@ -37,7 +37,7 @@ buttonInfo buttons[B_BUTTON_COUNT];
         void (*action)();
     };
 
-    enum remote_enum {R_On,R_Off,R_Fade,R_Breath,R_Red,R_Green,R_Blue,R_White,R_Up,R_Down,R_Remote_Count};
+    enum remote_enum {R_On,R_Off,R_Fade,R_Breath,R_Filling,R_Red,R_Green,R_Blue,R_White,R_Up,R_Down,R_Remote_Count};
     remoteInfo remote[R_Remote_Count];
 #endif
 

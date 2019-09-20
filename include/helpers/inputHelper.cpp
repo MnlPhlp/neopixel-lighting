@@ -129,7 +129,7 @@ namespace control
     }
 
     void contextDown(){
-        if (mode == M_Color || mode == M_Filling)
+        if (mode == M_Color)
             cycleBrightnessDown();
         else
             cycleSpeedDown();
@@ -181,6 +181,8 @@ namespace input
         remote[R_Fade].action = []{control::setMode(M_Fade);};
         remote[R_Breath].code = 0xF7E817;
         remote[R_Breath].action = []{control::setMode(M_Breath);};
+        remote[R_Filling].code = 0xF7F00F;
+        remote[R_Filling].action = []{control::setMode(M_Filling);};
         remote[R_Red].code = 0xF720DF;
         remote[R_Red].action = []{control::setColor(C_Red);};
         remote[R_Green].code = 0xF7A05F;
