@@ -48,5 +48,33 @@ namespace modes
         G_brightness = oldBrightness;
     }
 
+    bool turnOnAnimation(){
+        myPixels::setPixelColor(loopCount,G_color);
+        myPixels::setPixelColor(NUMPIXELS-loopCount-1,G_color);
+        myPixels::show();
+        if (loopCount == NUMPIXELS/2 - 1){
+            loopCount = 0;
+            return false; //stop transition
+        } 
+        else {
+            return true;
+        }
+    }
+
+    bool turnOffAnimation(){
+        myPixels::setPixelColor(NUMPIXELS/2-loopCount-1,0);
+        myPixels::setPixelColor(NUMPIXELS/2+loopCount,0);
+        myPixels::show();
+        if (loopCount == NUMPIXELS/2 - 1){
+            loopCount = 0;
+            return false; //stop transition
+        } 
+        else {
+            return true;
+        }
+    }
+
+
+
 } // namespace modes
 
