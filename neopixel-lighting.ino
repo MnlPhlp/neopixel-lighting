@@ -1,7 +1,3 @@
-// NeoPixel Ring simple sketch (c) 2013 Shae Erisson
-// Released under the GPLv3 license to match the rest of the
-// Adafruit NeoPixel library
-
 #include <Adafruit_NeoPixel.h>
 #include <IRremote.h>
 #include "include/modes.h"
@@ -21,6 +17,7 @@ Adafruit_NeoPixel neoPixels(NUMPIXELS, LED_PIN, NEO_GRB + NEO_KHZ800);
 IRrecv recv(RECV_PIN);
 lighting_mode mode = M_Color;
 unsigned long oldMillis = millis();
+bool transition = false;
 
 void setup() {
   // These lines are specifically to support the Adafruit Trinket 5V 16 MHz.
@@ -35,19 +32,37 @@ void setup() {
   #endif
 
   // setup Inputs
-  input::setupButtons();
-  input::setupRemote();
+  #if USE_Buttons
+    input::setupButtons();
+  #endif
+  #if USE_IR_Remote
+    input::setupRemote();
+  #endif
 }
 
 void loop(){
   lighting_mode oldMode = mode;
  // read input
-  bool newInput=input::handleButtonInput();
-  newInput = newInput || input::handleRemoteInput();
-  // reset loopCount if mode changed
-  if (oldMode != mode) loopCount = 0;
+  bool newInput = false;
+  #if USE_Buttons
+    newInput = input::handleButtonInput();
+  #endif
+  #if USE_IR_Remote
+    newInput = newInput || input::handleRemoteInput();
+  #endif
+  
+  //handle mode changes
+  if (oldMode != mode){
+    // reset loopCount if mode changed
+    loopCount = 0;
+    if (oldMode == M_Off && mode != M_Filling || mode == M_Off){
+      // use turn on/off transition
+      transition = true;
+    }
+  } 
+  
   // handle actual lighting
-  if (newInput || ((millis()-oldMillis) > (pause*10) && mode != M_Off && mode != M_Color)){
+  if (!transition && (newInput || (millis()-oldMillis) > (pause*10) && mode != M_Off && mode != M_Color)){
     switch (mode){
       case M_Filling: modes::filling(); break;
       case M_Fade:    modes::fade(); break;
@@ -59,19 +74,37 @@ void loop(){
     oldMillis = millis();
     loopCount += step;
     newInput = false;
-    // Debug Output
-   #if NL_DEBUG
-      Serial.println("Mode: "+modeName[mode]);
-      Serial.println("Color: "+String((uint8_t)(G_color >> 16))+", "+String((uint8_t)(G_color >> 8))+", "+String((uint8_t)G_color));
-      Serial.println("Brightness: "+String(G_brightness));
-      Serial.println("Steps: "+String(step));
-      Serial.println("Pause: "+String(pause));
-      for (int i = 0; i < NUMPIXELS; i++)
-      {
-        Serial.print(neoPixels.getPixelColor(i) == 0 ? "[ ]" : "[X]");
-      }
-      Serial.println();
-      delay(200);
-    #endif
   }
+
+  // handle transition
+  if (transition){
+    if (mode == M_Off){
+      transition = modes::turnOffAnimation();
+    }
+    else{
+      transition = modes::turnOnAnimation();
+    }
+    if (transition) {
+      loopCount += step;
+    }
+    else{
+      loopCount = 0;
+    } 
+  }
+
+  // Debug Output
+  #if NL_DEBUG
+    Serial.println("Mode: "+modeName[mode]);
+    Serial.println("Color: "+String((uint8_t)(G_color >> 16))+", "+String((uint8_t)(G_color >> 8))+", "+String((uint8_t)G_color));
+    Serial.println("Brightness: "+String(G_brightness));
+    Serial.println("Steps: "+String(step));
+    Serial.println("Pause: "+String(pause));
+    Serial.println("Transition: "+String(transition ? "True" : "False"));
+    for (int i = 0; i < NUMPIXELS; i++)
+    {
+      Serial.print(neoPixels.getPixelColor(i) == 0 ? "[ ]" : "[X]");
+    }
+    Serial.println();
+    delay(200);
+  #endif
 }

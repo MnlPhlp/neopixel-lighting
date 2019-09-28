@@ -1,7 +1,8 @@
 #ifndef constants_include
 // important settings
 #define NUMPIXELS 600 // Number of pixels in the led-strip
-#define IR_Remote 1 // set to 0 if no IR-Reciver is connected
+#define USE_IR_Remote 1 // set to 0 if no IR-Reciver is connected
+#define USE_Buttons 0 // set to 0 if no Buttons are connected
 
 // optional settings
 #define Max_Step 10
@@ -17,6 +18,7 @@
 #define C_WhiteLow 8421504 //used because on longer strips full white often looks yellow in the middle
 
 // Buttons
+#if USE_Buttons
 struct buttonInfo
 {
     boolean state;
@@ -26,9 +28,10 @@ struct buttonInfo
 
 enum button_enum {B_CYCLE_UP,B_Speed,B_COLOR,B_Brightness,B_BUTTON_COUNT};
 buttonInfo buttons[B_BUTTON_COUNT];
+#endif //USE_Buttons
 
 // remote
-#if IR_Remote
+#if USE_IR_Remote
     #define RECV_PIN 7
 
     struct remoteInfo

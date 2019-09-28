@@ -24,7 +24,7 @@ The Buttons are used for power,cycling the mode, cycling the speed and cycling t
 #### IR-Remote
 With an IR-Reciver for the arduino there is also support for an IR-Remote. The commands are configured for one of those standard remotes that come with a lot of simple RGB LED-Strips.
 
-If not using it set IR_REMOTE to 0 in 'include/constants.h'
+If not using it set USE_IR_REMOTE to 0 in 'include/constants.h'
 
 
 ### Item-List

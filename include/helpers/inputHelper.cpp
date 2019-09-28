@@ -139,6 +139,7 @@ namespace control
 
 namespace input
 {
+#if USE_Buttons
     // assign functions to buttons
     void setupButtons(){
         buttons[B_CYCLE_UP].action = control::cycleModeUp;
@@ -171,7 +172,9 @@ namespace input
         }
         return newInput;
     }
-#if IR_Remote
+#endif //USE_Buttons
+
+#if USE_IR_Remote
     void setupRemote(){
         remote[R_On].code = 0xF7C03F;
         remote[R_On].action = control::turnOn;
@@ -213,5 +216,5 @@ namespace input
         }
         return newInput;
     }
-#endif //IR_Remote
+#endif //USE_IR_Remote
 } // namespace input
