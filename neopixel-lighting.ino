@@ -43,6 +43,7 @@ void setup() {
 void loop(){
   #if NL_DEBUG
     unsigned long start = millis();
+    static unsigned long time = 0;
   #endif
   lighting_mode oldMode = mode;
  // read input
@@ -77,6 +78,9 @@ void loop(){
     oldMillis = millis();
     loopCount += step;
     newInput = false;
+    #if NL_DEBUG
+      time = millis() - start;
+    #endif
   }
 
   // handle transition
@@ -97,7 +101,6 @@ void loop(){
 
   // Debug Output
   #if NL_DEBUG
-    unsigned long time = millis() - start;
     Serial.println();
     Serial.println("==================================");
     Serial.println("Mode: "+modeName[mode]);
@@ -105,7 +108,7 @@ void loop(){
     Serial.println("Brightness: "+String(G_brightness));
     Serial.println("Steps: "+String(step));
     Serial.println("Pause: "+String(pause));
-    Serial.println("loop took: "+String(time)+"ms");
+    Serial.println("last active loop took: "+String(time)+"ms");
     Serial.println("Transition: "+String(transition ? "True" : "False"));
     if (NUMPIXELS < 60){
       for (int i = 0; i < NUMPIXELS; i++)
