@@ -37,7 +37,7 @@ namespace myPixels
         neoPixels.setPixelColor(i,r,g,b);
     }
 
-    void setPixelColor(int i, uint32_t color,,bool useGlobalBrightness = true){
+    void setPixelColor(int i, uint32_t color,bool useGlobalBrightness = true){
         if (useGlobalBrightness){
             color = modifyBrightness(color,G_brightness);
         }
