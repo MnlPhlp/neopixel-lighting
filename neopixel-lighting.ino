@@ -15,16 +15,16 @@
 // strandtest example for more information on possible values.
 Adafruit_NeoPixel neoPixels(NUMPIXELS, LED_PIN, NEO_GRB + NEO_KHZ800);
 IRrecv recv(RECV_PIN);
-lighting_mode mode = M_Color;
+lighting_mode mode = M_Off;
 unsigned long oldMillis = millis();
 bool transition = false;
 
 void setup() {
   // These lines are specifically to support the Adafruit Trinket 5V 16 MHz.
   // Any other board, you can remove this part (but no harm leaving it):
-#if defined(__AVR_ATtiny85__) && (F_CPU == 16000000)
-  clock_prescale_set(clock_div_1);
-#endif
+  #if defined(__AVR_ATtiny85__) && (F_CPU == 16000000)
+    clock_prescale_set(clock_div_1);
+  #endif
   // END of Trinket-specific code.
   neoPixels.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
   #if NL_DEBUG
@@ -79,10 +79,10 @@ void loop(){
   // handle transition
   if (transition){
     if (mode == M_Off){
-      transition = modes::turnOffAnimation();
+      transition = modes::turnOnOffAnimation(false);
     }
     else{
-      transition = modes::turnOnAnimation();
+      transition = modes::turnOnOffAnimation(true);
     }
     if (transition) {
       loopCount += step;
