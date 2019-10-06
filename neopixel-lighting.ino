@@ -41,6 +41,9 @@ void setup() {
 }
 
 void loop(){
+  #if NL_DEBUG
+    unsigned long start = millis();
+  #endif
   lighting_mode oldMode = mode;
  // read input
   bool newInput = false;
@@ -62,7 +65,7 @@ void loop(){
   } 
   
   // handle actual lighting
-  if (!transition && (newInput || (millis()-oldMillis) > (pause*10) && mode != M_Off && mode != M_Color)){
+  if (!transition && (newInput || (millis()-oldMillis) > pause && mode != M_Off && mode != M_Color)){
     switch (mode){
       case M_Filling: modes::filling(); break;
       case M_Fade:    modes::fade(); break;
@@ -94,17 +97,27 @@ void loop(){
 
   // Debug Output
   #if NL_DEBUG
+    unsigned long time = millis() - start;
+    Serial.println();
+    Serial.println("==================================");
     Serial.println("Mode: "+modeName[mode]);
     Serial.println("Color: "+String((uint8_t)(G_color >> 16))+", "+String((uint8_t)(G_color >> 8))+", "+String((uint8_t)G_color));
     Serial.println("Brightness: "+String(G_brightness));
     Serial.println("Steps: "+String(step));
     Serial.println("Pause: "+String(pause));
+    Serial.println("loop took: "+String(time)+"ms");
     Serial.println("Transition: "+String(transition ? "True" : "False"));
-    for (int i = 0; i < NUMPIXELS; i++)
+    if (NUMPIXELS < 60){
+      for (int i = 0; i < NUMPIXELS; i++)
+      {
+        Serial.print(neoPixels.getPixelColor(i) == 0 ? "[ ]" : "[X]");
+      }
+      Serial.println();
+    }else
     {
-      Serial.print(neoPixels.getPixelColor(i) == 0 ? "[ ]" : "[X]");
+      Serial.println("To many pixels to show")
     }
-    Serial.println();
+    
     delay(200);
   #endif
 }
