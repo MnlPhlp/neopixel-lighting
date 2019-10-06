@@ -115,7 +115,7 @@ void loop(){
       Serial.println();
     }else
     {
-      Serial.println("To many pixels to show")
+      Serial.println("To many pixels to show");
     }
     
     delay(200);
